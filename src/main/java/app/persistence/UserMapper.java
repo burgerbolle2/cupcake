@@ -27,7 +27,7 @@ public class UserMapper {
                 if (rs.next())
                 {
                     String role = rs.getString("role"); // Retrieve the role from the database
-                    int id = rs.getInt("user_id");
+                    int id = rs.getInt("users_id");
                     double balance = rs.getDouble("balance");
                     // Return a User object with the role
                     return new User(id, email, password, role,balance);

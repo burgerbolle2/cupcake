@@ -60,12 +60,13 @@ CREATE TABLE IF NOT EXISTS public.top
 CREATE TABLE IF NOT EXISTS public.users
 (
     users_id serial NOT NULL,
-    email character varying COLLATE pg_catalog."default" NOT NULL,
+    email character varying COLLATE pg_catalog."default" NOT NULL UNIQUE,
     password character varying COLLATE pg_catalog."default" NOT NULL,
     role character varying COLLATE pg_catalog."default" NOT NULL,
     balance numeric(10, 2) NOT NULL DEFAULT 100,
     CONSTRAINT users_pkey PRIMARY KEY (users_id)
     );
+
 
 ALTER TABLE IF EXISTS public.cupcake
     ADD CONSTRAINT cupcake_bottom_id_fkey FOREIGN KEY (bottom_id)
