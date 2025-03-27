@@ -14,7 +14,7 @@ public class UserMapper {
 
         public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException
         {
-            String sql = "SELECT * FROM team10_users WHERE email=? and password=?"; // Assuming 'email' is the username
+            String sql = "SELECT * FROM users WHERE email=? and password=?"; // Assuming 'email' is the username
 
             try (
                     Connection connection = connectionPool.getConnection();
@@ -28,8 +28,9 @@ public class UserMapper {
                 {
                     String role = rs.getString("role"); // Retrieve the role from the database
                     int id = rs.getInt("user_id");
+                    double balance = rs.getDouble("balance");
                     // Return a User object with the role
-                    return new Team10User(id, email, password, role);
+                    return new User(id, email, password, role,balance);
                 } else {
                     throw new DatabaseException("Error in login. Try again"); // Incorrect password
                 }
@@ -43,7 +44,7 @@ public class UserMapper {
 
         public static void createUser(String email, String password, ConnectionPool connectionPool) throws DatabaseException
         {
-            String sql = "insert into team10_users (email, password, role) values (?,?,?)";
+            String sql = "insert into users (email, password, role,balance) values (?,?,?,?)";
 
             try (
                     Connection connection = connectionPool.getConnection();
@@ -53,6 +54,7 @@ public class UserMapper {
                 ps.setString(1, email);
                 ps.setString(2, password);
                 ps.setString(3,"user");
+                ps.setDouble(4, 100);
 
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected != 1)
