@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Vælg Din Cupcake</title>
+  <meta charset="UTF-8">
+</head>
+<header>
+  <h1>Bestil dine cupcakes</h1>
+  <div class="top-right">
+    <span th:text="${session.user}">Bruger</span> |
+    <a href="/logout">Logout</a>
+  </div>
+</header>
+
+<body>
+<h1>🧁 Sammensæt din cupcake</h1>
+
+<form method="post" th:action="@{/add-cupcake}">
+  <label for="base">Vælg bund:</label>
+  <select name="base" id="base">
+    <option value="Chokolade">Chokolade (20 kr)</option>
+    <option value="Vanilje">Vanilje (18 kr)</option>
+    <option value="Red velvet">Red velvet (22 kr)</option>
+  </select>
+
+  <br><br>
+
+  <label for="topping">Vælg topping:</label>
+  <select name="topping" id="topping">
+    <option value="Jordbær">Jordbær (12 kr)</option>
+    <option value="Chokoladefrosting">Chokoladefrosting (15 kr)</option>
+    <option value="Karamel">Karamel (14 kr)</option>
+  </select>
+
+  <br><br>
+  <button type="submit">Tilføj til bestilling</button>
+</form>
+</body>
+</html>

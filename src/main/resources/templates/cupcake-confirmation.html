@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ordrebekræftelse</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>✅ Din cupcake er bestilt!</h1>
+
+<p>Bund: <span th:text="${cupcake.base}"></span></p>
+<p>Top: <span th:text="${cupcake.topping}"></span></p>
+<p>Pris i alt: <span th:text="${cupcake.totalPrice}"></span> kr</p>
+
+<p>Du kan hente din cupcake i butikken i Olsker 🍰</p>
+<a href="/choose">Bestil en til</a>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Cupcake Haven – Home</title>
     <meta charset="UTF-8">
@@ -10,8 +11,16 @@
 <body>
 <header>
     <div class="top-bar">
-        <a href="/login" class="login-link">Login / Create Account</a>
+        <!-- Viser login hvis ikke logget ind -->
+        <a th:if="${session.user == null}" href="/login" class="login-link">Login / Create Account</a>
+
+        <!-- Viser brugerinfo og logout hvis logget ind -->
+        <span th:if="${session.user != null}">
+            Logged in as <b th:text="${session.user}">user@example.com</b> |
+            <a href="/logout">Logout</a>
+        </span>
     </div>
+
     <h1>🧁 Welcome to M&M Cupcakes</h1>
     <p>Delicious cupcakes for everyone — no login required!</p>
 </header>
@@ -25,8 +34,14 @@
         <h2>Strawberry Bliss</h2>
         <p>Fluffy vanilla cake with strawberry frosting</p>
     </div>
+
+    <!-- Viser bestillingsknap kun hvis logget ind -->
+    <div th:if="${session.user != null}" class="order-button">
+        <a href="/choose">Start Your Order</a>
+    </div>
 </main>
 </body>
 </html>
+
 
 
