@@ -6,8 +6,16 @@ import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
 
+import java.util.List;
+
 public class HomeController {
-    private static void handleLogin(Context ctx, ConnectionPool connectionPool) {
+    private static ConnectionPool connectionPool;
+
+    public HomeController(ConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
+    }
+
+    public static void handleLogin(Context ctx, ConnectionPool connectionPool) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
@@ -23,10 +31,10 @@ public class HomeController {
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.render("team10/login.html");
+            ctx.render("login.html");
         }
     }
-    private static void handleCreateUser(Context ctx, ConnectionPool connectionPool) {
+    public static void handleCreateUser(Context ctx, ConnectionPool connectionPool) {
         // Retrieve user information from the form
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
@@ -48,6 +56,9 @@ public class HomeController {
             // Stay on the create-user page if there is an error
             ctx.render("team10/create-user.html");
         }
+    }
+    public static void home(Context ctx) throws DatabaseException {
+        ctx.render("index.html");
     }
 }
 

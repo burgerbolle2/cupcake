@@ -1,5 +1,6 @@
 package app;
 
+import app.controllers.HomeController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -17,6 +18,7 @@ public class Main {
     private static final String DB = "cupcake";
 
     public static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+    private static final HomeController homeController = new HomeController(connectionPool);
 
     public static void main(String[] args) {
         Javalin app = Javalin.create(config -> {
@@ -29,27 +31,12 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
 
-        // Hjemmeside
-        app.get("/", ctx -> ctx.redirect("/homepage"));
-        app.get("/homepage", ctx -> ctx.render("homepage.html"));
-
-        // Login side (GET)
+        app.get("/", ctx -> homeController.home(ctx));
         app.get("/login", ctx -> ctx.render("login.html"));
-
-        // Login form (POST)
-        app.post("/login", ctx -> {
-            String email = ctx.formParam("email");
-            String password = ctx.formParam("password");
-
-            // Simpelt dummy-login — kan erstattes med database senere
-            if ("user@example.com".equals(email) && "password".equals(password)) {
-                ctx.sessionAttribute("user", email);
-                ctx.redirect("/homepage");
-            } else {
-                ctx.attribute("message", "Invalid email or password.");
-                ctx.render("login.html");
-            }
-        });
+        app.post("/login", ctx -> homeController.handleLogin(ctx,connectionPool));
+        app.get("/create-user", ctx-> ctx.render("/create-user.html"));
+        app.post("/create-user", ctx -> homeController.handleCreateUser(ctx,connectionPool));
+        app.get("/homepage", ctx -> ctx.render("homepage.html"));
 
         // Logout
         app.get("/logout", ctx -> {
