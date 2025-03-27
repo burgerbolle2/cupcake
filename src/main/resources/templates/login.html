@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login – Cupcake Haven</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body class="login-page">
+<header>
+    <h1>Login to Cupcake Haven</h1>
+</header>
+
+<main class="login-container">
+    <form method="post" action="/login">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" placeholder="you@example.com" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required />
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p th:if="${message}" th:text="${message}" class="error-message"></p>
+
+    <div class="create-user-link">
+        <p>New here?</p>
+        <a href="/create-user">Create a user account</a>
+    </div>
+</main>
+</body>
+</html>
+
