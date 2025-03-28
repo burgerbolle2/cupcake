@@ -13,27 +13,23 @@
 </header>
 
 <body>
-<h1>🧁 Sammensæt din cupcake</h1>
+<h1>Customize your cupcake!</h1>
 
 <form method="post" th:action="@{/add-cupcake}">
-  <label for="base">Vælg bund:</label>
-  <select name="base" id="base">
-    <option value="Chokolade">Chokolade (20 kr)</option>
-    <option value="Vanilje">Vanilje (18 kr)</option>
-    <option value="Red velvet">Red velvet (22 kr)</option>
+  <label for="bottom">Choose Botto,:</label>
+  <select name="bottom" id="bottom">
+
   </select>
 
   <br><br>
 
-  <label for="topping">Vælg topping:</label>
-  <select name="topping" id="topping">
-    <option value="Jordbær">Jordbær (12 kr)</option>
-    <option value="Chokoladefrosting">Chokoladefrosting (15 kr)</option>
-    <option value="Karamel">Karamel (14 kr)</option>
+  <label for="top">Choose top:</label>
+  <select name="top" id="top">
+
   </select>
 
   <br><br>
-  <button type="submit">Tilføj til bestilling</button>
+  <button type="submit">Add to cart</button>
 </form>
 </body>
 </html>
