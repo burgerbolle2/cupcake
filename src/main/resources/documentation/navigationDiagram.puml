@@ -1,0 +1,37 @@
+@startuml
+state "Login" as LOGIN
+state "Kunde" as CUSTOMER
+state "Administrator" as ADMIN
+state "Indkøbskurv" as CART
+state "Ordrer" as ORDERS
+state "Kunder" as CUSTOMERS
+state "Betaling" as PAYMENT
+state "Profil" as PROFILE
+state "Vælg Cupcake" as CHOOSE_CUPCAKE
+state "Vælg Bund" as CHOOSE_BASE
+state "Vælg Top" as CHOOSE_TOP
+
+LOGIN --> CUSTOMER : Login
+LOGIN --> ADMIN : Login
+
+CUSTOMER --> CHOOSE_CUPCAKE : Bestille cupcakes
+CHOOSE_CUPCAKE --> CHOOSE_BASE : Vælg bund
+CHOOSE_BASE --> CHOOSE_TOP : Vælg top
+CHOOSE_TOP --> CART : Tilføj til kurv
+
+CUSTOMER --> CART : Se ordrelinjer
+CART --> PAYMENT : Betale ordre
+PAYMENT --> CUSTOMER : Ordre bekræftet
+
+CUSTOMER --> PROFILE : Opret konto
+PROFILE --> CUSTOMER : Konto gemt
+
+ADMIN --> ORDERS : Se ordrer
+ORDERS --> ADMIN : Administrer ordrer
+ORDERS --> CUSTOMERS : Se kunders ordrer
+ADMIN --> CUSTOMERS : Se kunder
+
+CART --> CUSTOMER : Fjerne ordrelinje
+ORDERS --> ADMIN : Fjerne ordre
+
+@enduml
