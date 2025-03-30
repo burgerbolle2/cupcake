@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CupcakeMapper {
@@ -31,16 +32,18 @@ public class CupcakeMapper {
     }
 
     public static Cupcake insertCupcake(Cupcake cupcake, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "INSERT INTO cupcake (bottom_id, top_id) VALUES (?, ?) RETURNING cupcake_id";
+        String sql = "INSERT INTO cupcake (bottom_id, top_id, price) VALUES (?, ?, ?) RETURNING cupcake_id";
 
         try (Connection conn = connectionPool.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, cupcake.getBottom().getBottomId());
             ps.setInt(2, cupcake.getTop().getTopId());
+            ps.setDouble(3, cupcake.getPrice());  // Include price in the insert
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                int generatedId = rs.getInt("cupcake_id"); // Return cupcake with generated ID
-                return new Cupcake(generatedId, cupcake.getBottom(), cupcake.getTop());
+                int generatedId = rs.getInt("cupcake_id"); // Get the generated cupcake_id
+                cupcake.setCupcakeId(generatedId);  // Set the generated ID for the cupcake
+                return cupcake;
             } else {
                 throw new DatabaseException("Failed to insert cupcake.");
             }
@@ -48,6 +51,7 @@ public class CupcakeMapper {
             throw new DatabaseException("Database error: " + e.getMessage());
         }
     }
+
 
     public static Bottom getBottomById(int bottomId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM bottom WHERE bottom_id = ?";
@@ -63,4 +67,36 @@ public class CupcakeMapper {
             throw new DatabaseException("Database error: " + e.getMessage());
         }
     }
+    public static List<Top> getAllTops(ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM top";
+        List<Top> tops = new ArrayList<>();
+
+        try (Connection conn = connectionPool.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                tops.add(new Top(rs.getInt("top_id"), rs.getString("name"), rs.getDouble("price")));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database error: " + e.getMessage());
+        }
+
+        return tops;
+    }
+
+    public static List<Bottom> getAllBottoms(ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM bottom";
+        List<Bottom> bottoms = new ArrayList<>();
+
+        try (Connection conn = connectionPool.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bottoms.add(new Bottom(rs.getInt("bottom_id"), rs.getString("name"), rs.getDouble("price")));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database error: " + e.getMessage());
+        }
+
+        return bottoms;
+    }
+
 }

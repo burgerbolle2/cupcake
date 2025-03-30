@@ -24,6 +24,8 @@ public class OrderLine {
         this.linePrice = linePrice;
     }
 
+
+
     // Getters
     public int getOrderLineId() {
         return orderLineId;

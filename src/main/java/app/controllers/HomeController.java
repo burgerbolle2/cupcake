@@ -21,7 +21,7 @@ public class HomeController {
 
         try {
             User user = UserMapper.login(email, password, connectionPool);
-            ctx.sessionAttribute("user_id", user.getUserId());
+            ctx.sessionAttribute("users_id", user.getUserId());
             ctx.sessionAttribute("user_role", user.getRole());  // Store role in session
 
             if ("admin".equals(user.getRole())) {

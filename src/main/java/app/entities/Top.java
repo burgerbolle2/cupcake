@@ -11,6 +11,11 @@ public class Top {
         this.price = price;
     }
 
+    public Top(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
     public int getTopId() { return topId; }
     public String getName() { return name; }
     public double getPrice() { return price; }

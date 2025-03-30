@@ -34,9 +34,8 @@ CREATE TABLE IF NOT EXISTS public.orders
 (
     orders_id serial NOT NULL,
     users_id integer,
-    status character varying COLLATE pg_catalog."default" NOT NULL,
     orders_date timestamp without time zone DEFAULT now(),
-    total_price numeric(10, 2) NOT NULL,
+    total_price numeric(10, 2),
     CONSTRAINT orders_pkey PRIMARY KEY (orders_id)
     );
 

@@ -4,19 +4,23 @@ public class Cupcake {
     private int cupcakeId;
     private Bottom bottom;
     private Top top;
+    private double price;
 
     public Cupcake(int cupcakeId, Bottom bottom, Top top) {
         this.cupcakeId = cupcakeId;
         this.bottom = bottom;
         this.top = top;
+        this.price = bottom.getPrice()+top.getPrice();
     }
+
     public Cupcake(Bottom bottom, Top top) {
         this.bottom = bottom;
         this.top = top;
+        this.price = bottom.getPrice()+top.getPrice();
     }
 
     public double getPrice() {
-        return bottom.getPrice() + top.getPrice();
+        return price;
     }
 
     public int getCupcakeId() {
