@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS public.orders
     users_id integer,
     orders_date timestamp without time zone DEFAULT now(),
     total_price numeric(10, 2),
+    is_completed boolean DEFAULT false,
     CONSTRAINT orders_pkey PRIMARY KEY (orders_id)
     );
 

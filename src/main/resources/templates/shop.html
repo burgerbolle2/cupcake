@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cupcake Shop</title>
-  <link rel="stylesheet" href="/css/styles.css"> <!-- Include your CSS file -->
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
 
 <header>
   <h1>Welcome to the Cupcake Shop!</h1>
   <p>Choose your cupcake combination</p>
-  <a href="/logout">Logout</a> <!-- Logout button -->
+  <a th:href="@{/logout}">Logout</a> <!-- Logout button -->
 </header>
 
 <main>
@@ -46,18 +46,26 @@
   <ul th:unless="${#lists.isEmpty(orderLinesDTO)}">
     <li th:each="orderLineDTO : ${orderLinesDTO}">
       <!-- Display quantity -->
-      <span th:text="'Amount: '+ ${orderLineDTO.quantity}"></span>
+      <span th:text="'Amount: ' + ${orderLineDTO.quantity}"></span>
 
       <!-- Display cupcake details (Top and Bottom names) -->
-      <span th:text="' Bottom: '+ ${orderLineDTO.bottomName} + ' + Top: ' + ${orderLineDTO.topName}"></span>
+      <span th:text="'Bottom: ' + ${orderLineDTO.bottomName} + ' + Top: ' + ${orderLineDTO.topName}"></span>
 
       <!-- Display line price -->
       <span th:text="'$' + ${orderLineDTO.linePrice}"></span>
+
+      <!-- Remove button to delete the item from order -->
+      <form th:action="@{/remove-from-order}" method="post">
+        <!-- Hidden fields for orderId and cupcakeId -->
+        <input type="hidden" name="orders_id" th:value="${orderLineDTO.orderId}" />
+        <input type="hidden" name="cupcake_id" th:value="${orderLineDTO.cupcakeId}" />
+        <button type="submit">Remove</button>
+      </form>
     </li>
   </ul>
 
 
-  <a href="/checkout">Proceed to Checkout</a>
+  <a th:href="@{/checkout}">Proceed to Checkout</a>
 </main>
 
 </body>

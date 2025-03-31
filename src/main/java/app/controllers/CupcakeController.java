@@ -45,11 +45,43 @@ public class CupcakeController {
             ctx.attribute("cupcake", cupcake);
             ctx.attribute("quantity", quantity);
 
-            ctx.redirect("/homepage");
+            ctx.redirect("/shop");
 
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Error processing cupcake order: " + e.getMessage());
+            ctx.render("error.html");
+        }
+    }
+
+    public static void showCheckoutPage(Context ctx, ConnectionPool connectionPool) {
+        try {
+            Integer userId = ctx.sessionAttribute("users_id");
+
+            if (userId == null) {
+                ctx.redirect("/login");
+                return;
+            }
+            // Fetch cupcake options
+            List<Top> tops = CupcakeMapper.getAllTops(connectionPool);
+            List<Bottom> bottoms = CupcakeMapper.getAllBottoms(connectionPool);
+            List<OrderLineDTO> orderLinesDTO = OrderMapper.getOrderLinesIfNotCompleted(userId, connectionPool);
+
+            // If orderLines is empty, pass a custom message or flag
+            boolean orderIsEmpty = orderLinesDTO.isEmpty();
+
+            // Store the data in the context
+            ctx.attribute("tops", tops);
+            ctx.attribute("bottoms", bottoms);
+            ctx.attribute("orderLinesDTO", orderLinesDTO);
+            ctx.attribute("orderIsEmpty", orderIsEmpty);
+
+            // Render the shop page using Thymeleaf
+            ctx.render("checkout.html");
+        } catch (DatabaseException e) {
+            // Log the error and display an error page
+            e.printStackTrace();
+            ctx.attribute("message", "Error loading shop: " + e.getMessage());
             ctx.render("error.html");
         }
     }
@@ -68,7 +100,7 @@ public class CupcakeController {
             // Fetch cupcake options
             List<Top> tops = CupcakeMapper.getAllTops(connectionPool);
             List<Bottom> bottoms = CupcakeMapper.getAllBottoms(connectionPool);
-            List<OrderLineDTO> orderLinesDTO = OrderMapper.getOrderLinesDTO(userId, connectionPool);
+            List<OrderLineDTO> orderLinesDTO = OrderMapper.getOrderLinesIfNotCompleted(userId, connectionPool);
 
             // If orderLines is empty, pass a custom message or flag
             boolean orderIsEmpty = orderLinesDTO.isEmpty();

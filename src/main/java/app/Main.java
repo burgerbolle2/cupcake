@@ -7,6 +7,7 @@ import app.entities.Top;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.CupcakeMapper;
+import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import app.config.ThymeleafConfig;
@@ -46,24 +47,19 @@ public class Main {
         app.post("/login", ctx -> homeController.handleLogin(ctx,connectionPool));
         app.get("/create-user", ctx-> ctx.render("/create-user.html"));
         app.post("/create-user", ctx -> homeController.handleCreateUser(ctx,connectionPool));
-        //app.get("/homepage", ctx -> ctx.render("homepage.html"));
-        app.get("/homepage", ctx -> CupcakeController.showShopPage(ctx,connectionPool));
+        app.get("/shop", ctx -> CupcakeController.showShopPage(ctx,connectionPool));
         app.post("/add-to-order", ctx -> CupcakeController.handleCupcakeChoice(ctx,connectionPool));
+        app.post("/remove-from-order", ctx -> OrderMapper.removeCupcakeFromOrder(ctx,connectionPool));
+        app.get("/checkout", ctx -> CupcakeController.showCheckoutPage(ctx,connectionPool));
+        app.get("/payment",ctx -> HomeController.showPaymentPage(ctx,connectionPool));
+        app.post("/complete-order", ctx -> OrderMapper.handleCheckout(ctx,connectionPool));
 
         // Logout
         app.get("/logout", ctx -> {
             ctx.req().getSession().invalidate();
-            ctx.redirect("/homepage");
+            ctx.redirect("/");
         });
 
-        // Viser bestillingssiden kun hvis logget ind
-        app.get("/choose", ctx -> {
-            if (ctx.sessionAttribute("user") == null) {
-                ctx.redirect("/login");
-            } else {
-                ctx.render("choose-cupcake.html");
-            }
-        });
     }
 }
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const balance = parseFloat(document.getElementById("balance").textContent);
+            const totalPrice = parseFloat(document.getElementById("totalPrice").textContent);
+            const payButton = document.getElementById("payButton");
+
+            if (balance < totalPrice) {
+                payButton.disabled = true;
+            }
+        });
+    </script>
+</head>
+<body>
+<h1>Checkout</h1>
+
+<p>Your current balance: <span id="balance" th:text="${balance}"></span> USD</p>
+<p>Total price of order: <span id="totalPrice" th:text="${total_price}"></span> USD</p>
+
+<form action="/complete-order" method="post">
+    <input type="hidden" name="orders_id" th:value="${orders_id}">
+    <button type="submit" id="payButton" th:disabled="${balance < total_price}">Complete Payment</button>
+</form>
+
+<p id="errorMessage" th:if="${message}" style="color: red;" th:text="${message}"></p>
+
+<a href="/shop">Back to Shop</a>
+</body>
+</html>

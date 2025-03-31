@@ -3,6 +3,7 @@ package app.controllers;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
 
@@ -23,11 +24,12 @@ public class HomeController {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("users_id", user.getUserId());
             ctx.sessionAttribute("user_role", user.getRole());  // Store role in session
+            ctx.sessionAttribute("balance", user.getBalance());
 
             if ("admin".equals(user.getRole())) {
                 ctx.redirect("/admin");  // Redirect admins to admin panel
             } else {
-                ctx.redirect("/homepage");
+                ctx.redirect("/shop");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
@@ -54,11 +56,29 @@ public class HomeController {
                 ctx.attribute("message", "Error creating user: " + e.getMessage());
             }
             // Stay on the create-user page if there is an error
-            ctx.render("team10/create-user.html");
+            ctx.render("/create-user.html");
         }
     }
     public static void home(Context ctx) throws DatabaseException {
         ctx.render("index.html");
     }
+    public static void showPaymentPage(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int userId = (int) ctx.sessionAttribute("users_id");
+            double balance = UserMapper.getUserBalance(userId, connectionPool); // Get user balance
+            int orderId = OrderMapper.getLatestOrderId(userId, connectionPool); // Get latest order ID
+            double totalPrice = OrderMapper.getTotalOrderPrice(orderId, connectionPool); // Sum all orderLines
+
+            ctx.attribute("balance", balance);
+            ctx.attribute("orders_id", orderId);
+            ctx.attribute("total_price", totalPrice);
+
+            ctx.render("payment.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Error retrieving payment details: " + e.getMessage());
+            ctx.render("error.html");
+        }
+    }
+
 }
 
