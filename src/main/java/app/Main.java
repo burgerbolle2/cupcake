@@ -37,6 +37,7 @@ public class Main {
 
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
+
         List<Top> tops = CupcakeMapper.getAllTops(connectionPool);
         List<Bottom> bottoms = CupcakeMapper.getAllBottoms(connectionPool);
         System.out.println(tops);
@@ -44,22 +45,17 @@ public class Main {
 
         app.get("/", ctx -> homeController.home(ctx));
         app.get("/login", ctx -> ctx.render("login.html"));
-        app.post("/login", ctx -> homeController.handleLogin(ctx,connectionPool));
-        app.get("/create-user", ctx-> ctx.render("/create-user.html"));
-        app.post("/create-user", ctx -> homeController.handleCreateUser(ctx,connectionPool));
-        app.get("/shop", ctx -> CupcakeController.showShopPage(ctx,connectionPool));
-        app.post("/add-to-order", ctx -> CupcakeController.handleCupcakeChoice(ctx,connectionPool));
-        app.post("/remove-from-order", ctx -> OrderMapper.removeCupcakeFromOrder(ctx,connectionPool));
-        app.get("/checkout", ctx -> CupcakeController.showCheckoutPage(ctx,connectionPool));
-        app.get("/payment",ctx -> HomeController.showPaymentPage(ctx,connectionPool));
-        app.post("/complete-order", ctx -> OrderMapper.handleCheckout(ctx,connectionPool));
+        app.post("/login", ctx -> homeController.handleLogin(ctx, connectionPool));
+        app.get("/create-user", ctx -> ctx.render("/create-user.html"));
+        app.post("/create-user", ctx -> homeController.handleCreateUser(ctx, connectionPool));
+        app.get("/shop", ctx -> CupcakeController.showShopPage(ctx, connectionPool));
+        app.post("/add-to-order", ctx -> CupcakeController.handleCupcakeChoice(ctx, connectionPool));
+        app.post("/remove-from-order", ctx -> OrderMapper.removeCupcakeFromOrder(ctx, connectionPool));
+        app.get("/checkout", ctx -> CupcakeController.showCheckoutPage(ctx, connectionPool));
+        app.get("/payment", ctx -> HomeController.showPaymentPage(ctx, connectionPool));
+        app.post("/complete-order", ctx -> OrderMapper.handleCheckout(ctx, connectionPool));
 
-        // Logout
-        app.get("/logout", ctx -> {
-            ctx.req().getSession().invalidate();
-            ctx.redirect("/");
-        });
-
+        //logout
+        app.get("/logout", ctx -> homeController.home(ctx));
     }
 }
-

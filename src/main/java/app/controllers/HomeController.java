@@ -22,9 +22,12 @@ public class HomeController {
 
         try {
             User user = UserMapper.login(email, password, connectionPool);
+
+            // Stores user attributes in session
             ctx.sessionAttribute("users_id", user.getUserId());
-            ctx.sessionAttribute("user_role", user.getRole());  // Store role in session
+            ctx.sessionAttribute("role", user.getRole());
             ctx.sessionAttribute("balance", user.getBalance());
+            ctx.sessionAttribute("email", user.getEmail());
 
             if ("admin".equals(user.getRole())) {
                 ctx.redirect("/admin");  // Redirect admins to admin panel
@@ -36,6 +39,7 @@ public class HomeController {
             ctx.render("login.html");
         }
     }
+
     public static void handleCreateUser(Context ctx, ConnectionPool connectionPool) {
         // Retrieve user information from the form
         String email = ctx.formParam("email");
@@ -59,6 +63,7 @@ public class HomeController {
             ctx.render("/create-user.html");
         }
     }
+
     public static void home(Context ctx) throws DatabaseException {
         ctx.render("index.html");
     }
@@ -68,10 +73,12 @@ public class HomeController {
             double balance = UserMapper.getUserBalance(userId, connectionPool); // Get user balance
             int orderId = OrderMapper.getLatestOrderId(userId, connectionPool); // Get latest order ID
             double totalPrice = OrderMapper.getTotalOrderPrice(orderId, connectionPool); // Sum all orderLines
+            String email =  ctx.sessionAttribute("email");
 
             ctx.attribute("balance", balance);
             ctx.attribute("orders_id", orderId);
             ctx.attribute("total_price", totalPrice);
+            ctx.attribute("email",email);
 
             ctx.render("payment.html");
         } catch (DatabaseException e) {
@@ -79,6 +86,5 @@ public class HomeController {
             ctx.render("error.html");
         }
     }
-
 }
 
