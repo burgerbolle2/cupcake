@@ -1,0 +1,61 @@
+@startuml
+
+hide circle
+
+class Users {
+  users_id
+  email
+  password
+  role
+  balance
+}
+
+class Orders {
+  orders_id
+  users_id
+  orders_date
+  total_price
+}
+
+class OrderLine {
+  order_line_id
+  orders_id
+  cupcake_id
+  quantity
+  line_price
+}
+
+class Cupcake {
+  cupcake_id
+  top_id
+  bottom_id
+  price
+}
+
+class Bottom {
+  bottom_id
+  name
+  price
+}
+
+class Top {
+  top_id
+  name
+  price
+}
+
+class Payments {
+  payments_id
+  users_id
+  amount
+  payment_date
+}
+
+Users "1" -- "*" Orders : placerer
+Orders "1" -- "*" OrderLine : indeholder
+OrderLine "1" -- "1" Cupcake : består af
+Cupcake "1" -- "1" Bottom : har
+Cupcake "1" -- "1" Top : har
+Users "1" -- "*" Payments : foretager
+
+@enduml
