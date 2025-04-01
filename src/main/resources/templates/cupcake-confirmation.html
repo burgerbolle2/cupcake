@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Ordrebekræftelse</title>
     <meta charset="UTF-8">
+    <title>Order Confirmed – Olsker Cupcakes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
-<body>
-<h1>Your order has been sent!</h1>
+<body class="confirmation-page">
 
-<p>Bund: <span th:text="${cupcake.base}"></span></p>
-<p>Top: <span th:text="${cupcake.topping}"></span></p>
-<p>Pris i alt: <span th:text="${cupcake.totalPrice}"></span> kr</p>
+<header class="login-header">
+    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+</header>
 
-<p>You can pick up your cupcake in our store in Olsker!</p>
-<a href="/choose">Order some more?</a>
+<main class="confirmation-container">
+    <h1>Thank you for your order!</h1>
+    <p>Your payment has been received, and your order is now confirmed.</p>
+    <p>We look forward to welcoming you when you pick up your cupcakes at our store in Olsker.</p>
+
+    <a href="/shop" class="button">Return to Shop</a>
+</main>
+
 </body>
 </html>
+

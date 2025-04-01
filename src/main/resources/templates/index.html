@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Train Now</title>
+    <title>Welcome – Olsker Cupcakes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
-
 </head>
 
-<body class="start-page">
-<div class="logo-background"></div>
-<header>
+<body class="login-page">
+<header class="login-header">
+    <!-- Updated cupcake banner filename -->
+    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
 
+    <!-- Logo placed below the banner -->
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
 </header>
 
-<h1>Welcome to Olsker Cupcakes</h1>
+<main class="login-container">
+    <h1>Welcome to Olsker Cupcakes</h1>
+    <h2>Please login to begin browsing</h2>
 
-<h2>Please login to begin browsing</h2>
-
-<a th:href="@{/login}" class="login-link">Login</a>
-<a th:href="@{/create-user}" class="login-link">Create user</a>
-
-
+    <a th:href="@{/login}" class="login-link">Login</a>
+    <a th:href="@{/create-user}" class="login-link">Create user</a>
+</main>
 </body>
 </html>

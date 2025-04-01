@@ -57,6 +57,8 @@ public class Main {
         app.get("/checkout", ctx -> CupcakeController.showCheckoutPage(ctx, connectionPool));
         app.get("/payment", ctx -> HomeController.showPaymentPage(ctx, connectionPool));
         app.post("/complete-order", ctx -> OrderMapper.handleCheckout(ctx, connectionPool));
+        app.get("/confirmation", ctx -> ctx.render("cupcake-confirmation.html"));
+
 
         //logout
         app.get("/logout", ctx -> homeController.home(ctx));
