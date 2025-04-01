@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login – Cupcake Haven</title>
+    <title>Login – Olsker Cupcakes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 
 <body class="login-page">
-<header>
-    <h1>Login to Olsker Cupcakes</h1>
+
+<!-- Banner with cupcakes -->
+<header class="login-header">
+    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
 </header>
 
+<!-- Logo below the banner -->
+<div class="logo-container">
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+</div>
+
 <main class="login-container">
+    <h1>Login to Olsker Cupcakes</h1>
+
     <form method="post" action="/login">
         <label for="email">Email</label>
         <input type="text" id="email" name="email" placeholder="you@example.com" required />
@@ -30,6 +39,10 @@
         <a href="/create-user">Create a user account</a>
     </div>
 </main>
+
 </body>
 </html>
+
+
+
 

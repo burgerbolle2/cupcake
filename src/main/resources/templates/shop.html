@@ -1,71 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cupcake Shop</title>
-  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupcake Shop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
-<body>
+<body class="shop-page">
 
-<header>
-  <h1>Welcome to the Cupcake Shop!</h1>
-  <p>Choose your cupcake combination</p>
-  <a th:href="@{/logout}">Logout</a> <!-- Logout button -->
+<header class="shop-header">
+    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img"/>
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo"/>
+    <h1>Welcome to the Cupcake Shop!</h1>
+    <p>Choose your cupcake combination</p>
+    <a th:href="@{/logout}">Logout</a> <!-- Logout button -->
 </header>
 
-<main>
-  <form action="/order" method="post">
-    <label for="bottom">Choose Bottom:</label>
-    <select name="bottom" id="bottom" required>
-      <option th:each="bottom : ${bottoms}"
-              th:value="${bottom.bottomId}"
-              th:text="${bottom.name} + ' - $' + ${bottom.price}"></option>
-    </select>
+<nav class="shop-nav">
+    <a th:href="@{/admin-orders}">Customer Orders</a>
+    <span class="shop-email">jobe@cphbusiness.dk</span>
+    <img src="/images/basket-icon.png" alt="Kurv" class="basket-icon"/>
+</nav>
 
-    <label for="top">Choose Top:</label>
-    <select name="top" id="top" required>
-      <option th:each="top : ${tops}"
-              th:value="${top.topId}"
-              th:text="${top.name} + ' - $' + ${top.price}"></option>
-    </select>
+<main class="shop-container">
+    <form action="/order" method="post" class="cupcake-form">
+        <label for="bottom">Choose Bottom:</label>
+        <select name="bottom" id="bottom" required>
+            <option th:each="bottom : ${bottoms}"
+                    th:value="${bottom.bottomId}"
+                    th:text="${bottom.name} + ' - $' + ${bottom.price}"></option>
+        </select>
 
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+        <label for="top">Choose Top:</label>
+        <select name="top" id="top" required>
+            <option th:each="top : ${tops}"
+                    th:value="${top.topId}"
+                    th:text="${top.name} + ' - $' + ${top.price}"></option>
+        </select>
 
-    <button type="submit" formaction="/add-to-order">Add to Order</button>
-  </form>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" min="1" value="1" required>
 
-  <h2>Your Order</h2>
+        <button type="submit" formaction="/add-to-order" class="order-button">Add to Order</button>
+    </form>
 
-  <!-- Check if orderLines is empty -->
-  <div th:if="${#lists.isEmpty(orderLinesDTO)}">
-    <p>Your order is empty. Start by adding items to your order!</p>
-  </div>
+    <h2>Your Order</h2>
 
-  <ul th:unless="${#lists.isEmpty(orderLinesDTO)}">
-    <li th:each="orderLineDTO : ${orderLinesDTO}">
-      <!-- Display quantity -->
-      <span th:text="'Amount: ' + ${orderLineDTO.quantity}"></span>
+    <!-- Check if orderLines is empty -->
+    <div th:if="${#lists.isEmpty(orderLinesDTO)}">
+        <p>Your order is empty. Start by adding items to your order!</p>
+    </div>
 
-      <!-- Display cupcake details (Top and Bottom names) -->
-      <span th:text="'Bottom: ' + ${orderLineDTO.bottomName} + ' + Top: ' + ${orderLineDTO.topName}"></span>
+    <ul th:unless="${#lists.isEmpty(orderLinesDTO)}">
+        <li th:each="orderLineDTO : ${orderLinesDTO}">
+            <!-- Display quantity -->
+            <span th:text="'Amount: ' + ${orderLineDTO.quantity}"></span>
 
-      <!-- Display line price -->
-      <span th:text="'$' + ${orderLineDTO.linePrice}"></span>
+            <!-- Display cupcake details (Top and Bottom names) -->
+            <span th:text="'Bottom: ' + ${orderLineDTO.bottomName} + ' + Top: ' + ${orderLineDTO.topName}"></span>
 
-      <!-- Remove button to delete the item from order -->
-      <form th:action="@{/remove-from-order}" method="post">
-        <!-- Hidden fields for orderId and cupcakeId -->
-        <input type="hidden" name="orders_id" th:value="${orderLineDTO.orderId}" />
-        <input type="hidden" name="cupcake_id" th:value="${orderLineDTO.cupcakeId}" />
-        <button type="submit">Remove</button>
-      </form>
-    </li>
-  </ul>
+            <!-- Display line price -->
+            <span th:text="'$' + ${orderLineDTO.linePrice}"></span>
+
+            <!-- Remove button to delete the item from order -->
+            <form th:action="@{/remove-from-order}" method="post">
+                <!-- Hidden fields for orderId and cupcakeId -->
+                <input type="hidden" name="orders_id" th:value="${orderLineDTO.orderId}"/>
+                <input type="hidden" name="cupcake_id" th:value="${orderLineDTO.cupcakeId}"/>
+                <button type="submit">Remove</button>
+            </form>
+        </li>
+    </ul>
 
 
-  <a th:href="@{/checkout}">Proceed to Checkout</a>
+    <a th:href="@{/checkout}">Proceed to Checkout</a>
 </main>
 
 </body>

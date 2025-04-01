@@ -1,45 +1,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Train Now</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
-
+  <title>Create User – Cupcake Haven</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 
 <body class="login-page">
-
 <header>
-
-
+  <h1>Create a New Account</h1>
 </header>
 
-<h1>Welcome, please create an user!</h1>
-
-<form method="post">
-
+<main class="login-container">
+  <form method="post" action="/create-user">
     <label for="email">Email</label>
-    <input type="text" id="email" name="email" placeholder="email"/>
+    <input type="text" id="email" name="email" placeholder="you@example.com" required />
+
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" placeholder="password"/>
-    <button type="submit" formaction="/create-user">Register</button>
+    <input type="password" id="password" name="password" placeholder="••••••••" required />
 
-</form>
-<!-- Display message if it exists -->
-<div>
-    <p th:text="${message}"></p> <!-- Show message here -->
-</div>
+    <button type="submit">Create Account</button>
+  </form>
 
-<!-- Add Back to Login button -->
-<div>
-    <a href="/login" class="back-to-login">Back to Login</a>
-</div>
+  <p th:if="${message}" th:text="${message}" class="error-message"></p>
 
-
-
-
+  <div class="create-user-link">
+    <a href="/login">Back to login</a>
+  </div>
+</main>
 </body>
 </html>

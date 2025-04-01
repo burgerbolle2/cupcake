@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Payment – Olsker Cupcakes</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const balance = parseFloat(document.getElementById("balance").textContent);
@@ -17,19 +17,29 @@
         });
     </script>
 </head>
-<body>
-<h1>Checkout</h1>
+<body class="login-page">
 
-<p>Your current balance: <span id="balance" th:text="${balance}"></span> USD</p>
-<p>Total price of order: <span id="totalPrice" th:text="${total_price}"></span> USD</p>
+<header class="login-header">
+    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+</header>
 
-<form action="/complete-order" method="post">
-    <input type="hidden" name="orders_id" th:value="${orders_id}">
-    <button type="submit" id="payButton" th:disabled="${balance < total_price}">Complete Payment</button>
-</form>
+<main class="login-container">
+    <h1>Checkout</h1>
 
-<p id="errorMessage" th:if="${message}" style="color: red;" th:text="${message}"></p>
+    <p>Your current balance: <span id="balance" th:text="${balance}"></span> USD</p>
+    <p>Total price of order: <span id="totalPrice" th:text="${total_price}"></span> USD</p>
 
-<a href="/shop">Back to Shop</a>
+    <form action="/complete-order" method="post">
+        <input type="hidden" name="orders_id" th:value="${orders_id}">
+        <button type="submit" id="payButton" th:disabled="${balance < total_price}">Complete Payment</button>
+    </form>
+
+    <p id="errorMessage" th:if="${message}" class="error-message" th:text="${message}"></p>
+
+    <a class="login-link" href="/shop">Back to Shop</a>
+</main>
+
 </body>
 </html>
+

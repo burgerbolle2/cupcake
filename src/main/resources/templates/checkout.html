@@ -3,42 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cupcake Shop</title>
+    <title>Checkout – Olsker Cupcakes</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
-<body>
+<body class="checkout-page">
 
-<header>
-    <h1>Checkout</h1>
-    <p>Confirm order and go to payment</p>
-    <a href="/logout">Logout</a> <!-- Logout button -->
+<header class="login-header">
+    <!-- Cupcake banner -->
+    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
+    <!-- Logo -->
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
 </header>
 
-<main>
+<main class="checkout-container">
+    <h1>Checkout</h1>
+    <p>Confirm your order and proceed to payment</p>
 
-    <h2>Your Order</h2>
+    <a href="/logout" class="logout-button">Logout</a>
 
-    <!-- Check if orderLines is empty -->
-    <div th:if="${#lists.isEmpty(orderLinesDTO)}">
-        <p>Your order is empty. Start by adding items to your order!</p>
+    <section class="order-section">
+        <h2>Your Order</h2>
+
+        <div th:if="${#lists.isEmpty(orderLinesDTO)}" class="empty-order">
+            <p>Your order is empty. Start by adding items to your order!</p>
+        </div>
+
+        <ul th:unless="${#lists.isEmpty(orderLinesDTO)}" class="order-list">
+            <li th:each="orderLineDTO : ${orderLinesDTO}" class="order-item">
+                <span th:text="'Amount: ' + ${orderLineDTO.quantity}"></span>
+                <span th:text="'Bottom: ' + ${orderLineDTO.bottomName} + ' + Top: ' + ${orderLineDTO.topName}"></span>
+                <span th:text="'$' + ${orderLineDTO.linePrice}"></span>
+            </li>
+        </ul>
+    </section>
+
+    <div class="checkout-buttons">
+        <a th:href="@{/shop}" class="button">Back to Shop</a>
+        <a th:href="@{/payment}" class="button primary">Proceed to Payment</a>
     </div>
-
-    <ul th:unless="${#lists.isEmpty(orderLinesDTO)}">
-        <li th:each="orderLineDTO : ${orderLinesDTO}">
-            <!-- Display quantity -->
-            <span th:text="'Amount: '+ ${orderLineDTO.quantity}"></span>
-
-            <!-- Display cupcake details (Top and Bottom names) -->
-            <span th:text="' Bottom: '+ ${orderLineDTO.bottomName} + ' + Top: ' + ${orderLineDTO.topName}"></span>
-
-            <!-- Display line price -->
-            <span th:text="'$' + ${orderLineDTO.linePrice}"></span>
-        </li>
-    </ul>
-
-    <a th:href="@{/shop}">Back to shop</a>
-    <a th:href="@{/payment}">Proceed to Payment</a>
 </main>
 
 </body>
 </html>
+
