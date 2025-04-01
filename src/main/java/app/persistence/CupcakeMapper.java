@@ -2,10 +2,8 @@ package app.persistence;
 
 import app.entities.Bottom;
 import app.entities.Cupcake;
-import app.entities.OrderLine;
 import app.entities.Top;
 import app.exceptions.DatabaseException;
-import io.javalin.http.Context;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

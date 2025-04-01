@@ -80,4 +80,22 @@ public class UserMapper {
         }
     }
 
+    public static String getUserEmail(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT email FROM users WHERE users_id = ?";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1,userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("email");
+            }else {
+                throw new DatabaseException("User not found.");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database error retrieving email: " + e.getMessage());
+        }
+    }
+
 }
