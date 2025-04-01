@@ -1,5 +1,6 @@
 package app;
 
+import app.controllers.AdminController;
 import app.controllers.CupcakeController;
 import app.controllers.HomeController;
 import app.entities.Bottom;
@@ -49,6 +50,8 @@ public class Main {
         app.get("/create-user", ctx -> ctx.render("/create-user.html"));
         app.post("/create-user", ctx -> homeController.handleCreateUser(ctx, connectionPool));
         app.get("/shop", ctx -> CupcakeController.showShopPage(ctx, connectionPool));
+        app.get("/admin",ctx -> AdminController.showAdminPage(ctx, connectionPool));
+        app.get("/admin-orders", ctx -> AdminController.showUsersOrders(ctx, connectionPool));
         app.post("/add-to-order", ctx -> CupcakeController.handleCupcakeChoice(ctx, connectionPool));
         app.post("/remove-from-order", ctx -> OrderMapper.removeCupcakeFromOrder(ctx, connectionPool));
         app.get("/checkout", ctx -> CupcakeController.showCheckoutPage(ctx, connectionPool));

@@ -63,4 +63,10 @@ public class AdminController {
         ctx.attribute("orders", orders);
         ctx.render("/admin/orders.html");
     }
+    public static void showAdminPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException{
+        String email = ctx.sessionAttribute("email");
+        ctx.attribute("email", email);
+        ctx.render("/admin/shop-admin.html");
+
+    }
 }

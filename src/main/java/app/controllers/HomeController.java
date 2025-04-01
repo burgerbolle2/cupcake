@@ -69,7 +69,7 @@ public class HomeController {
     }
     public static void showPaymentPage(Context ctx, ConnectionPool connectionPool) {
         try {
-            int userId = (int) ctx.sessionAttribute("users_id");
+            int userId = ctx.sessionAttribute("users_id");
             double balance = UserMapper.getUserBalance(userId, connectionPool); // Get user balance
             int orderId = OrderMapper.getLatestOrderId(userId, connectionPool); // Get latest order ID
             double totalPrice = OrderMapper.getTotalOrderPrice(orderId, connectionPool); // Sum all orderLines
