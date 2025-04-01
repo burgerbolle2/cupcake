@@ -67,6 +67,5 @@ public class AdminController {
         String email = ctx.sessionAttribute("email");
         ctx.attribute("email", email);
         ctx.render("/admin/shop-admin.html");
-
     }
 }
