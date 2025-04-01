@@ -1,5 +1,6 @@
 package app;
 
+import app.controllers.AdminController;
 import app.controllers.CupcakeController;
 import app.controllers.HomeController;
 import app.entities.Bottom;
@@ -53,6 +54,7 @@ public class Main {
         app.get("/checkout", ctx -> CupcakeController.showCheckoutPage(ctx,connectionPool));
         app.get("/payment",ctx -> HomeController.showPaymentPage(ctx,connectionPool));
         app.post("/complete-order", ctx -> OrderMapper.handleCheckout(ctx,connectionPool));
+        app.get("/admin-orders", ctx -> AdminController.showUsersOrders(ctx,connectionPool));
 
         // Logout
         app.get("/logout", ctx -> {
