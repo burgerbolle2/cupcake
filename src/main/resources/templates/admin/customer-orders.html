@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Orders</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body class="completed-orders-page">
+
+<header>
+    <h1>Completed Orders</h1>
+    <div class="user-info">
+        Logged in as: <span th:text="${session.email}"></span>
+    </div>
+    <a th:href="@{/admin}" class="back-button">Back to Admin Dashboard</a>
+</header>
+
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User ID</th>
+            <th>User Email</th>
+            <th>Order Date</th>
+            <th>Total Price</th>
+            <th>Order Details</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderId}"></td>
+            <td th:text="${order.userId}"></td>
+            <td th:text="${order.userEmail}"></td>
+            <td th:text="${order.orderDate}"></td>
+            <td th:text="'€' + ${order.totalPrice}"></td>
+            <td>
+                <ul>
+                    <li th:each="line : ${order.orderLines}">
+                        <span th:text="${line.quantity} + 'x ' + ${line.topName} + ' + ' + ${line.bottomName} + ' (€' + ${line.linePrice} + ')'"></span>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <!-- Remove button for each order -->
+                <form action="/remove-order" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}"/>
+                    <button type="submit" class="remove-button">Remove</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>

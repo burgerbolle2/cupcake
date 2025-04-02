@@ -57,11 +57,13 @@ public class CupcakeController {
     public static void showCheckoutPage(Context ctx, ConnectionPool connectionPool) {
         try {
             Integer userId = ctx.sessionAttribute("users_id");
+            String userRole = ctx.sessionAttribute("user_role"); // Get role from session
 
             if (userId == null) {
                 ctx.redirect("/login");
                 return;
             }
+
             // Fetch cupcake options
             List<Top> tops = CupcakeMapper.getAllTops(connectionPool);
             List<Bottom> bottoms = CupcakeMapper.getAllBottoms(connectionPool);
@@ -75,21 +77,24 @@ public class CupcakeController {
             ctx.attribute("bottoms", bottoms);
             ctx.attribute("orderLinesDTO", orderLinesDTO);
             ctx.attribute("orderIsEmpty", orderIsEmpty);
+            ctx.attribute("userRole", userRole); // Pass role to Thymeleaf
 
-            // Render the shop page using Thymeleaf
+            // Render the checkout page
             ctx.render("checkout.html");
         } catch (DatabaseException e) {
-            // Log the error and display an error page
             e.printStackTrace();
             ctx.attribute("message", "Error loading shop: " + e.getMessage());
             ctx.render("error.html");
         }
     }
 
+
+
     public static void showShopPage(Context ctx, ConnectionPool connectionPool) {
         try {
             // Check if the user is logged in
             Integer userId = ctx.sessionAttribute("users_id");
+            String role = ctx.sessionAttribute("role");
 
             if (userId == null) {
                 // Redirect to login page if the user is not logged in
@@ -110,6 +115,7 @@ public class CupcakeController {
             ctx.attribute("bottoms", bottoms);
             ctx.attribute("orderLinesDTO", orderLinesDTO);
             ctx.attribute("orderIsEmpty", orderIsEmpty);
+            ctx.attribute("userRole", role);
 
             // Render the shop page using Thymeleaf
             ctx.render("shop.html");

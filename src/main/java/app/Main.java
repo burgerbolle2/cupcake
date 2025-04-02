@@ -52,6 +52,9 @@ public class Main {
         app.get("/shop", ctx -> CupcakeController.showShopPage(ctx, connectionPool));
         app.get("/admin",ctx -> AdminController.showAdminPage(ctx, connectionPool));
         app.get("/admin-orders", ctx -> AdminController.showUsersOrders(ctx, connectionPool));
+        app.get("/admin-insert-balance",ctx -> AdminController.showDepositPage(ctx,connectionPool));
+        app.post("/remove-order", ctx -> AdminController.removeOrder(ctx, connectionPool));
+        app.post("/admin/deposit", ctx -> AdminController.handleInsertBalance(ctx,connectionPool));
         app.post("/add-to-order", ctx -> CupcakeController.handleCupcakeChoice(ctx, connectionPool));
         app.post("/remove-from-order", ctx -> OrderMapper.removeCupcakeFromOrder(ctx, connectionPool));
         app.get("/checkout", ctx -> CupcakeController.showCheckoutPage(ctx, connectionPool));
@@ -62,5 +65,7 @@ public class Main {
 
         //logout
         app.get("/logout", ctx -> homeController.home(ctx));
+
     }
+
 }

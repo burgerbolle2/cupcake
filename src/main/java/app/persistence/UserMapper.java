@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper {
 
@@ -80,7 +82,7 @@ public class UserMapper {
         }
     }
 
-    public static String getUserEmail(int userId, ConnectionPool connectionPool) throws DatabaseException {
+    public static String getUserEmailByID(int userId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT email FROM users WHERE users_id = ?";
 
         try (Connection conn = connectionPool.getConnection();
@@ -97,5 +99,48 @@ public class UserMapper {
             throw new DatabaseException("Database error retrieving email: " + e.getMessage());
         }
     }
+
+    public static List<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";  // Vælg alle nødvendige kolonner
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int userId = rs.getInt("users_id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String role = rs.getString("role");
+                double balance = rs.getDouble("balance");
+
+                User user = new User(userId, email, password, role, balance);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error fetching users", e.getMessage());
+        }
+        return users;
+    }
+
+    public static void depositMoney(int userId, double amount, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE users SET balance = balance + ? WHERE users_id = ?";  // Opdaterer brugerens balance
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setDouble(1, amount);  // Sætter beløbet, der skal tilføjes til balance
+            ps.setInt(2, userId);     // Sætter brugerens ID
+
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new DatabaseException("User not found or unable to update balance");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error depositing money", e.getMessage());
+        }
+    }
+
 
 }

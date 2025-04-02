@@ -57,6 +57,19 @@ public class OrderMapper {
             ctx.status(400).result("Failed to remove cupcake: " + e.getMessage());
         }
     }
+
+    public static void removeOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String query = "DELETE FROM orders WHERE orders_id = ?";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, orderId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException("Error removing order", e.getMessage());
+        }
+    }
+
     public static List<OrderLineDTO> getOrderLinesIfNotCompleted(int userId, ConnectionPool connectionPool) throws DatabaseException {
         List<OrderLineDTO> orderLineDTOs = new ArrayList<>();
         String sql = """
@@ -96,33 +109,32 @@ public class OrderMapper {
 
 
 
-    public static List<OrderLineDTO> getOrderLinesDTO(int userId, ConnectionPool connectionPool) throws DatabaseException {
+    public static List<OrderLineDTO> getOrderLinesDTOByOrderId(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         List<OrderLineDTO> orderLineDTOs = new ArrayList<>();
         String sql = """
-                    SELECT ol.orders_id, ol.cupcake_id, ol.quantity, 
-                           (b.price + t.price) * ol.quantity AS line_price,
-                           b.name AS bottom_name, t.name AS top_name
-                    FROM order_line ol
-                    JOIN cupcake c ON ol.cupcake_id = c.cupcake_id
-                    JOIN bottom b ON c.bottom_id = b.bottom_id
-                    JOIN top t ON c.top_id = t.top_id
-                    JOIN orders o ON ol.orders_id = o.orders_id
-                    WHERE o.users_id = ?
-                """;
+                SELECT ol.orders_id, ol.cupcake_id, ol.quantity, 
+                       (b.price + t.price) * ol.quantity AS line_price,
+                       b.name AS bottom_name, t.name AS top_name
+                FROM order_line ol
+                JOIN cupcake c ON ol.cupcake_id = c.cupcake_id
+                JOIN bottom b ON c.bottom_id = b.bottom_id
+                JOIN top t ON c.top_id = t.top_id
+                WHERE ol.orders_id = ?
+            """;
 
-        try (Connection conn = connectionPool.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, userId);
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                int orderId = rs.getInt("orders_id");
                 int cupcakeId = rs.getInt("cupcake_id");
                 int quantity = rs.getInt("quantity");
                 double linePrice = rs.getDouble("line_price");
                 String bottomName = rs.getString("bottom_name");
                 String topName = rs.getString("top_name");
 
-                // Map the data into an OrderLineDTO object
+                // Create an OrderLineDTO object
                 OrderLineDTO orderLineDTO = new OrderLineDTO(orderId, cupcakeId, quantity, linePrice, bottomName, topName);
                 orderLineDTOs.add(orderLineDTO);
             }
@@ -131,6 +143,7 @@ public class OrderMapper {
         }
         return orderLineDTOs;
     }
+
 
 
     public static List<OrderLine> getOrderLines(int userId, ConnectionPool connectionPool) throws DatabaseException {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body class="admin-page">
+
+<header>
+    <h1 class="admin-title">Admin Dashboard</h1>
+
+    <div class="user-info">
+        Logged in as: <span th:text="${session.email}"></span>
+    </div>
+</header>
+
+<div class="admin-buttons">
+    <a th:href="@{/admin-orders}" class="admin-button">View Customers Completed Orders</a>
+    <a th:href="@{/admin-insert-balance}" class="admin-button">Insert Balance To Customers</a>
+    <a th:href="@{/shop}" class="admin-button">View Shop</a>
+</div>
+
+<a href="/" class="admin-logout">Back to Home</a>
+</body>
+</html>

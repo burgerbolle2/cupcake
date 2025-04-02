@@ -81,6 +81,7 @@ body {
     color: var(--purple);
     text-decoration: none;
 }
+
 .checkout-page {
     background-color: #3e1664;
     font-family: 'Segoe UI', sans-serif;
@@ -147,14 +148,16 @@ body {
 }
 
 .button {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #8e44ad;
-    color: white;
+    display: block;
+    padding: 12px;
     text-decoration: none;
+    color: white;
+    background-color: var(--light-purple);
     border-radius: 6px;
-    margin-right: 10px;
+    font-size: 16px;
     font-weight: bold;
+    transition: background 0.3s ease;
+    border: 2px solid var(--white);
 }
 
 .button.primary {
@@ -164,6 +167,7 @@ body {
 .button:hover {
     background-color: #5e3370;
 }
+
 /* Confirmation Page Layout */
 .confirmation-page {
     font-family: 'Segoe UI', sans-serif;
@@ -227,6 +231,142 @@ body {
 .confirmation-container .button:hover {
     background-color: #e0d0f7;
 }
+
+:root {
+    --purple: #3e1261;
+    --dark-purple: #2b0d47;
+    --light-purple: #6c3483;
+    --background-light: #f3e9fc;
+    --white: #ffffff;
+}
+
+/* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+    background-color: var(--purple);
+    color: white;
+}
+
+/* Admin Page */
+.admin-page {
+    background-color: var(--purple);
+}
+
+/* Title Styling */
+.admin-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: var(--white);
+}
+
+/* Admin Buttons Container */
+.admin-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+/* Buttons */
+.admin-button {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color: white;
+    background-color: var(--light-purple);
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    border: 2px solid var(--white);
+}
+
+.admin-button:hover {
+    background-color: var(--dark-purple);
+    border-color: var(--background-light);
+}
+
+/* Logout Link */
+.admin-logout {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: var(--light-purple);
+    transition: background-color 0.3s ease;
+}
+
+.admin-logout:hover {
+    background-color: var(--dark-purple);
+}
+/* Completed Orders Page */
+.completed-orders-page {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Header */
+.completed-orders-page header {
+    background-color: var(--purple);
+    padding: 15px;
+    color: white;
+    font-size: 24px;
+}
+
+.completed-orders-page header a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.completed-orders-page header a:hover {
+    text-decoration: underline;
+}
+
+/* Table Styling */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: var(--background-light);
+    color: var(--purple);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--light-purple);
+}
+
+th {
+    background-color: var(--light-purple);
+    color: white;
+    font-size: 18px;
+}
+
+tbody tr:hover {
+    background-color: #e8dff8;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+}
+
+
 
 
 

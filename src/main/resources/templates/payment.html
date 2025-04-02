@@ -20,6 +20,9 @@
 <body class="login-page">
 
 <header class="login-header">
+    <div class="user-info">
+        Logged in as: <span th:text="${session.email}"></span>
+    </div>
     <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
     <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
 </header>
@@ -38,6 +41,7 @@
     <p id="errorMessage" th:if="${message}" class="error-message" th:text="${message}"></p>
 
     <a class="login-link" href="/shop">Back to Shop</a>
+
 </main>
 
 </body>

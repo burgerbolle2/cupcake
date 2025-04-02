@@ -9,18 +9,18 @@
 <body class="shop-page">
 
 <header class="shop-header">
+
     <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img"/>
     <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo"/>
     <h1>Welcome to the Cupcake Shop!</h1>
+    <div class="user-info">
+        Logged in as: <span th:text="${session.email}"></span>
+    </div>
     <p>Choose your cupcake combination</p>
     <a th:href="@{/logout}">Logout</a> <!-- Logout button -->
 </header>
 
-<nav class="shop-nav">
-    <a th:href="@{/admin-orders}">Customer Orders</a>
-    <span class="shop-email">jobe@cphbusiness.dk</span>
-    <img src="/images/basket-icon.png" alt="Kurv" class="basket-icon"/>
-</nav>
+
 
 <main class="shop-container">
     <form action="/order" method="post" class="cupcake-form">
@@ -73,7 +73,10 @@
     </ul>
 
 
-    <a th:href="@{/checkout}">Proceed to Checkout</a>
+    <a th:href="@{/checkout}"class="button">Proceed to Checkout</a>
+    <div th:if="${userRole == 'admin'}">
+        <a th:href="@{/admin}" class="button">Go to Admin Dashboard</a>
+    </div>
 </main>
 
 </body>

@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout – Olsker Cupcakes</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <body class="checkout-page">
 
 <header class="login-header">
     <!-- Cupcake banner -->
-    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
+    <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img"/>
     <!-- Logo -->
-    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo"/>
+    <div class="user-info">
+        Logged in as: <span th:text="${session.email}"></span>
+    </div>
 </header>
 
 <main class="checkout-container">
+
     <h1>Checkout</h1>
     <p>Confirm your order and proceed to payment</p>
 
@@ -38,8 +42,13 @@
     </section>
 
     <div class="checkout-buttons">
+
         <a th:href="@{/shop}" class="button">Back to Shop</a>
         <a th:href="@{/payment}" class="button primary">Proceed to Payment</a>
+        <div th:if="${userRole == 'admin'}">
+            <a th:href="@{/admin/admin-homepage.html}" class="button">Go to Admin Dashboard</a>
+        </div>
+
     </div>
 </main>
 
