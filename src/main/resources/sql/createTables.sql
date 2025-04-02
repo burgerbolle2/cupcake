@@ -96,8 +96,7 @@ ALTER TABLE IF EXISTS public.order_line
     ADD CONSTRAINT order_line_orders_id_fkey FOREIGN KEY (orders_id)
     REFERENCES public.orders (orders_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-       ON DELETE NO ACTION
-    NOT VALID;
+       ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS public.orders
