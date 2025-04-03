@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.controllers.CupcakeController;
 import app.entities.*;
 import app.exceptions.DatabaseException;
 import io.javalin.http.Context;
@@ -52,6 +53,7 @@ public class OrderMapper {
 
             // Efter succesfuld fjernelse, send et svar tilbage
             ctx.status(200).result("Cupcake removed successfully.");
+            CupcakeController.showShopPage(ctx,connectionPool);
         } catch (NumberFormatException | DatabaseException e) {
             // Håndter fejl og send et passende svar
             ctx.status(400).result("Failed to remove cupcake: " + e.getMessage());

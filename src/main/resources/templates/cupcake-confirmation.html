@@ -10,13 +10,14 @@
 
 <!-- Cupcake banner inside the header -->
 <header class="login-header">
+
     <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
 </header>
-
-<!-- Logo placed separately below the banner -->
-<div class="logo-container">
-    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+<div class="user-info">
+    Logged in as: <span th:text="${session.email}"></span>
 </div>
+
+
 
 <main class="confirmation-container">
     <h1>Thank you for your order!</h1>
