@@ -8,25 +8,26 @@
 </head>
 <body class="checkout-page">
 
+<!-- Cupcake banner -->
 <header class="login-header">
-    <!-- Cupcake banner -->
     <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img"/>
-    <!-- Logo -->
-    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo"/>
-    <div class="user-info">
-        Logged in as: <span th:text="${session.email}"></span>
-    </div>
 </header>
 
+<!-- Logo placed separately under banner -->
+<div class="logo-container">
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo"/>
+</div>
+
+<div class="user-info">
+    Logged in as: <span th:text="${session.email}"></span>
+</div>
+
 <main class="checkout-container">
-
-    <h1>Checkout</h1>
-    <p>Confirm your order and proceed to payment</p>
-
-    <a href="/logout" class="logout-button">Logout</a>
+    <h1 class="checkout-title">Checkout</h1>
+    <p class="checkout-subtitle">Confirm your order and proceed to payment</p>
 
     <section class="order-section">
-        <h2>Your Order</h2>
+        <h2 class="order-title">Your Order</h2>
 
         <div th:if="${#lists.isEmpty(orderLinesDTO)}" class="empty-order">
             <p>Your order is empty. Start by adding items to your order!</p>
@@ -34,24 +35,24 @@
 
         <ul th:unless="${#lists.isEmpty(orderLinesDTO)}" class="order-list">
             <li th:each="orderLineDTO : ${orderLinesDTO}" class="order-item">
-                <span th:text="'Amount: ' + ${orderLineDTO.quantity}"></span>
-                <span th:text="'Bottom: ' + ${orderLineDTO.bottomName} + ' + Top: ' + ${orderLineDTO.topName}"></span>
-                <span th:text="'$' + ${orderLineDTO.linePrice}"></span>
+                <span><strong>Amount:</strong> <span th:text="${orderLineDTO.quantity}"></span></span><br>
+                <span><strong>Cupcake:</strong> <span th:text="${orderLineDTO.bottomName} + ' + ' + ${orderLineDTO.topName}"></span></span><br>
+                <span><strong>Price:</strong> $<span th:text="${orderLineDTO.linePrice}"></span></span>
             </li>
         </ul>
     </section>
 
     <div class="checkout-buttons">
-
         <a th:href="@{/shop}" class="button">Back to Shop</a>
         <a th:href="@{/payment}" class="button primary">Proceed to Payment</a>
         <div th:if="${userRole == 'admin'}">
-            <a th:href="@{/admin/admin-homepage.html}" class="button">Go to Admin Dashboard</a>
+            <a th:href="@{/admin/admin-homepage.html}" class="button admin-button">Go to Admin Dashboard</a>
         </div>
-
+        <a href="/logout" class="logout-button">Logout</a>
     </div>
 </main>
 
 </body>
 </html>
+
 

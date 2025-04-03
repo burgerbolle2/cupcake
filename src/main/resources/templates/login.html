@@ -1,3 +1,4 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,15 +10,15 @@
 
 <body class="login-page">
 
+<!-- Logo at the top -->
+<div class="logo-top">
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+</div>
+
 <!-- Banner with cupcakes -->
 <header class="login-header">
     <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
 </header>
-
-<!-- Logo below the banner -->
-<div class="logo-container">
-    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
-</div>
 
 <main class="login-container">
     <h1>Login to Olsker Cupcakes</h1>
@@ -29,16 +30,18 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="password" required />
 
-        <button type="submit">Login</button>
+        <button type="submit" class="login-button">Login</button>
     </form>
 
     <p th:if="${message}" th:text="${message}" class="error-message"></p>
 
-    <div class="create-user-link">
-        <p>New here?</p>
-        <a href="/create-user">Create a user account</a>
-    </div>
+    <form action="/create-user" method="get">
+        <button type="submit" class="login-button">Create a user account</button>
+    </form>
 </main>
+</body>
+</html>
+
 
 </body>
 </html>

@@ -19,13 +19,20 @@
 </head>
 <body class="login-page">
 
+<!-- Cupcake banner -->
 <header class="login-header">
-    <div class="user-info">
-        Logged in as: <span th:text="${session.email}"></span>
-    </div>
     <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
-    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
 </header>
+
+<!-- Logo placed under banner -->
+<div class="logo-container">
+    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+</div>
+
+<!-- User info -->
+<div class="user-info">
+    Logged in as: <span th:text="${session.email}"></span>
+</div>
 
 <main class="login-container">
     <h1>Checkout</h1>
@@ -33,17 +40,22 @@
     <p>Your current balance: <span id="balance" th:text="${balance}"></span> USD</p>
     <p>Total price of order: <span id="totalPrice" th:text="${total_price}"></span> USD</p>
 
-    <form action="/complete-order" method="post">
-        <input type="hidden" name="orders_id" th:value="${orders_id}">
-        <button type="submit" id="payButton" th:disabled="${balance < total_price}">Complete Payment</button>
-    </form>
+    <div class="checkout-buttons">
+        <form action="/complete-order" method="post">
+            <input type="hidden" name="orders_id" th:value="${orders_id}">
+            <button type="submit" id="payButton" class="button primary full-width" th:disabled="${balance < total_price}">
+                Complete Payment
+            </button>
+        </form>
+
+        <a class="button full-width" href="/shop">Back to Shop</a>
+    </div>
 
     <p id="errorMessage" th:if="${message}" class="error-message" th:text="${message}"></p>
-
-    <a class="login-link" href="/shop">Back to Shop</a>
-
 </main>
 
 </body>
 </html>
+
+
 

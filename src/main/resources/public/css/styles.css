@@ -366,6 +366,189 @@ tbody tr:hover {
     }
 }
 
+.button {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: var(--light-purple);
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border: 2px solid white;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: var(--dark-purple);
+}
+.checkout-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.checkout-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #ddd;
+}
+
+.order-section {
+    background-color: var(--background-light);
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--purple);
+    margin-top: 20px;
+}
+
+.order-title {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--purple);
+}
+
+.order-item {
+    text-align: left;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    color: var(--purple);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.logout-button {
+    background-color: #aa2cc6;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logout-button:hover {
+    background-color: #8b1caa;
+}
+.checkout-subtitle {
+    color: #333; /* Dark text for contrast */
+    font-size: 18px;
+    margin-top: -10px;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+/* Logo sits cleanly below the banner */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00000033;
+}
+
+.checkout-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.full-width {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+/* Consistent global button style */
+.button, .login-button, button, input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background-color: #6c3483; /* Same purple as your current buttons */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover,
+.login-button:hover,
+button:hover,
+input[type="submit"]:hover {
+    background-color: #5e3370;
+}
+.order-item {
+    background-color: var(--background-light);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    color: var(--purple);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.order-line-details {
+    flex: 1;
+    text-align: left;
+}
+
+.remove-form {
+    margin: 0;
+}
+
+.button.danger {
+    background-color: #c0392b;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button.danger:hover {
+    background-color: #a93226;
+}
+
+.logo-top {
+    text-align: center;
+    padding: 20px 0 10px 0;
+    background-color: var(--purple);
+}
+
+.logo-top .logo {
+    width: 120px;
+    height: auto;
+}
+
+
 
 
 

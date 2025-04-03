@@ -12,16 +12,22 @@
     <!-- Updated cupcake banner filename -->
     <img src="/images/cupcakelogo.png" alt="Cupcake banner" class="header-cupcake-img" />
 
-    <!-- Logo placed below the banner -->
-    <img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
 </header>
+<img src="/images/logo.png" alt="Olsker Cupcakes Logo" class="logo" />
+</div>
 
 <main class="login-container">
     <h1>Welcome to Olsker Cupcakes</h1>
     <h2>Please login to begin browsing</h2>
 
-    <a th:href="@{/login}" class="login-link">Login</a>
-    <a th:href="@{/create-user}" class="login-link">Create user</a>
+    <form action="/login" method="get">
+        <button type="submit" class="login-button">Login</button>
+    </form>
+
+    <form action="/create-user" method="get">
+        <button type="submit" class="login-button">Create user</button>
+    </form>
+
 </main>
 </body>
 </html>
